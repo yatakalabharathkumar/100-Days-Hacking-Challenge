@@ -1,16 +1,17 @@
-## Day 2: Networking Fundamentals & Tracking
+## 100 Days Hacking Challenge – Day 1
 
-**Focus:** IP Addresses, DNS, and Ports
+On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
 
-During a simulated investigation of suspicious logins, I realized the critical importance of IP addresses in tracing activity.
+I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
 
-**What I Learned:**
-- **IP Addressing:** Differences between IPv4 and IPv6; distinction between Private and Public IP ranges.
-- **DNS Architecture:** How domain names are structured and resolved to IPs.
-- **Communication:** The role of Ports and Protocols in identifying services.
+**What I learned on Day 1:**
+- The true meaning of **bug bounty hunting**
+- How **penetration testing** is different from unstructured/random attacks
+- How **computer networking** works behind the scenes
+- The basics of **client–server architecture**
+- How **data packets** travel across networks
+- The different roles and types of **servers**
 
-**Relevance:**
-This knowledge is essential for:
-1. Tracing attackers through digital footprints.
-2. Identifying active services on a target during reconnaissance.
-3. Understanding the flow of communication across the internet.
+This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+
+I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
