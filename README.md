@@ -1,16 +1,13 @@
-## Day 2: Networking Fundamentals & Tracking
+## Day 3: OSINT & WHOIS Analysis
 
-**Focus:** IP Addresses, DNS, and Ports
+**Focus:** Domain Investigation, WHOIS Protocol, and Scam Detection
 
-During a simulated investigation of suspicious logins, I realized the critical importance of IP addresses in tracing activity.
+I investigated a fraudulent crypto investment site to understand how attackers set up their infrastructure.
 
 **What I Learned:**
-- **IP Addressing:** Differences between IPv4 and IPv6; distinction between Private and Public IP ranges.
-- **DNS Architecture:** How domain names are structured and resolved to IPs.
-- **Communication:** The role of Ports and Protocols in identifying services.
+- **WHOIS Lookup:** How to query domain registrars for ownership and registration data.
+- **Evidence Gathering:** Using creation dates to disprove claims of "long-standing reputation."
+- **Link Analysis:** How registrant details can connect multiple scam websites to a single actor.
+- **OSINT Basics:** The role of public records in identifying malicious networks.
 
-**Relevance:**
-This knowledge is essential for:
-1. Tracing attackers through digital footprints.
-2. Identifying active services on a target during reconnaissance.
-3. Understanding the flow of communication across the internet.
+**Tool Used:** `whois` (Command Line / Web Tools)
