@@ -1,13 +1,13 @@
-## Day 3: OSINT & WHOIS Analysis
+## Day 4: Subdomain Enumeration & Attack Surface
 
-**Focus:** Domain Investigation, WHOIS Protocol, and Scam Detection
+**Focus:** Reconnaissance, Asset Discovery, and Attack Surface Management
 
-I investigated a fraudulent crypto investment site to understand how attackers set up their infrastructure.
+I learned that a secure main domain does not guarantee a secure infrastructure. Attackers look for the "low-hanging fruit" in subdomains.
 
-**What I Learned:**
-- **WHOIS Lookup:** How to query domain registrars for ownership and registration data.
-- **Evidence Gathering:** Using creation dates to disprove claims of "long-standing reputation."
-- **Link Analysis:** How registrant details can connect multiple scam websites to a single actor.
-- **OSINT Basics:** The role of public records in identifying malicious networks.
+**Key Learnings:**
+- **Enumeration:** The process of listing all valid subdomains for a target (e.g., `admin.site.com`, `dev.site.com`).
+- **Hidden Risks:** How developers often leave test environments or old admin panels exposed on public subdomains.
+- **Entry Points:** Why these forgotten assets are often less monitored and easier to exploit than the main application.
+- **Defense:** The importance of knowing your full inventory/attack surface.
 
-**Tool Used:** `whois` (Command Line / Web Tools)
+**Concept:** "Security through obscurity" fails when hackers can simply enumerate your hidden sites.
