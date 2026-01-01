@@ -1,17 +1,22 @@
-## 100 Days Hacking Challenge – Day 1
+## 100 Days Hacking Challenge – Day 5
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+"One of the most overlooked phases in Reconnaissance is Virtual Host Discovery (or Reverse IP Lookup).
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+In modern cloud and shared hosting environments, a single public IP address rarely maps to just one domain. It usually serves content for dozens, sometimes hundreds, of different domains (Virtual Hosts).
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+Why is this critical for a pentester?
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+Scope Expansion: It reveals other assets owned by the target that you might have missed with subdomain enumeration.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+Weakest Link: It identifies third-party sites hosted on the same server. If Target.com is secure but hosted on a shared cPanel server with Vulnerable-Wordpress-Blog.com, an attacker can exploit the blog to gain a shell on the server.
+
+Tools used:
+
+Bing ip: operator (e.g., ip:x.x.x.x)
+
+HackerTarget API
+
+Command line: host -t PTR <IP> (Reverse DNS, though less effective for virtual hosts)
+
+Today's lesson: Always check the neighborhood."
+
