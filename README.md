@@ -1,17 +1,13 @@
+## Day 6: OSINT & Web Archiving
 
-**Day 6 of #100DaysHackingChallenge 🕰️🔍**
+**Focus:** Digital Forensics, Internet History, and Evidence Preservation
 
-The Case: A scammer cheated victims and then deleted his website to hide the evidence. He thought he was safe.
+I investigated a "deleted" scam website to understand how digital footprints persist.
 
-The Solution: Today, I used the Wayback Machine (Internet Archive). It’s basically a time machine for the web.
+**What I Learned:**
+- **Wayback Machine:** How to query the Internet Archive to find historical versions of a URL.
+- **Evidence Recovery:** Retrieving content (text, images, contact info) from a site that is currently offline (404).
+- **Persistence:** Understanding that automated bots crawl and archive the web constantly, making total deletion difficult for attackers.
+- **Forensic Value:** How snapshots serve as proof of past intent and activity.
 
-What I recovered:
-📂 The original homepage (before deletion).
-💸 The fake "investment" offers.
-📞 Hidden contact details.
-
-Lesson: Deleting a website does NOT erase its history. Digital footprints are permanent. The internet never forgets. 👁️
-
-Have you ever used the Wayback Machine? 👇
-
-#OSINT #WaybackMachine #DigitalForensics #EthicalHacking #CyberSecurity #ScamInvestigation #TechTips #LearningJourney #Telugu
+**Tools Used:** `archive.org` (Wayback Machine), `cachedview`
