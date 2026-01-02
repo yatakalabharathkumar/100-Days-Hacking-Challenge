@@ -1,22 +1,17 @@
-## 100 Days Hacking Challenge – Day 5
 
-"One of the most overlooked phases in Reconnaissance is Virtual Host Discovery (or Reverse IP Lookup).
+**Day 6 of #100DaysHackingChallenge 🕰️🔍**
 
-In modern cloud and shared hosting environments, a single public IP address rarely maps to just one domain. It usually serves content for dozens, sometimes hundreds, of different domains (Virtual Hosts).
+The Case: A scammer cheated victims and then deleted his website to hide the evidence. He thought he was safe.
 
-Why is this critical for a pentester?
+The Solution: Today, I used the Wayback Machine (Internet Archive). It’s basically a time machine for the web.
 
-Scope Expansion: It reveals other assets owned by the target that you might have missed with subdomain enumeration.
+What I recovered:
+📂 The original homepage (before deletion).
+💸 The fake "investment" offers.
+📞 Hidden contact details.
 
-Weakest Link: It identifies third-party sites hosted on the same server. If Target.com is secure but hosted on a shared cPanel server with Vulnerable-Wordpress-Blog.com, an attacker can exploit the blog to gain a shell on the server.
+Lesson: Deleting a website does NOT erase its history. Digital footprints are permanent. The internet never forgets. 👁️
 
-Tools used:
+Have you ever used the Wayback Machine? 👇
 
-Bing ip: operator (e.g., ip:x.x.x.x)
-
-HackerTarget API
-
-Command line: host -t PTR <IP> (Reverse DNS, though less effective for virtual hosts)
-
-Today's lesson: Always check the neighborhood."
-
+#OSINT #WaybackMachine #DigitalForensics #EthicalHacking #CyberSecurity #ScamInvestigation #TechTips #LearningJourney #Telugu
