@@ -1,17 +1,15 @@
-## 100 Days Hacking Challenge – Day 1
+## Day 7: Building a Hacking Lab
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Virtualization, Legal Compliance, and Safe Testing Environments
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+I learned how to set up a legal and safe environment for practicing penetration testing.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+**Key Learnings:**
+- **Virtualization:** Using hypervisors (VirtualBox/VMware) to run isolated virtual machines (VMs).
+- **Lab Components:**
+  - *Attacker Machine:* Kali Linux / Parrot OS.
+  - *Target Machine:* Metasploitable, DVWA, or OWASP Juice Shop.
+- **Safety:** Importance of network isolation (Host-Only/NAT Network) to prevent accidental scanning of external networks.
+- **Ethics:** Understanding that hacking is only legal when performed on infrastructure you own or have explicit permission to test.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
-
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+**Why it matters:** This "sandbox" approach allows for aggressive testing without legal risk or damage to real-world systems.
