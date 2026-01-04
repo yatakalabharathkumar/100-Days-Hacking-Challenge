@@ -1,17 +1,15 @@
-## 100 Days Hacking Challenge – Day 1
+## Day 8: Submarine Cables & Physical Infrastructure
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Network Infrastructure, Physical Security, and Global Data Flow
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+I explored the physical layer of the internet, specifically Submarine Cables, which carry 99% of global traffic.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+**Key Learnings:**
+- **The "Cloud" is Physical:** Data travels via fiber-optic cables under oceans, not satellites.
+- **Vulnerabilities:**
+  - *Physical:* Damage from anchors, sharks, or sabotage.
+  - *Cyber:* Tapping into "Landing Stations" to intercept data streams.
+- **Strategic Importance:** How disrupting a few cables can isolate entire nations (Availability attacks).
+- **Defense:** The need for route diversity and encryption at the physical layer.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
-
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+**Realization:** A firewall cannot protect data if the physical cable carrying it is cut or tapped.
