@@ -1,17 +1,18 @@
-## 100 Days Hacking Challenge – Day 1
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+## Day 9: Cable Vulnerabilities & Geopolitics
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+**Focus:** Availability Attacks, Physical Sabotage, and Critical Infrastructure Risk
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+I investigated how vulnerable the global internet is to physical disruption of submarine cables.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+**Key Learnings:**
+- **Chokepoints:** Geographic bottlenecks (e.g., Red Sea, Suez Canal) where many cables converge, creating high risk.
+- **Threat Vectors:**
+  - *Accidental:* Anchor dragging, fishing trawlers (most common).
+  - *Intentional:* State-sponsored sabotage during geopolitical tension.
+- **Impact:**
+  - *Economic:* Disruption of SWIFT/Banking networks.
+  - *Social:* Internet blackouts affecting communication and emergency services.
+- **Case Studies:** Reviewed the 2024 East Africa outages and Red Sea cable cuts.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+**Realization:** "Availability" (the 'A' in the CIA Triad) is heavily dependent on the physical security of these cables.
