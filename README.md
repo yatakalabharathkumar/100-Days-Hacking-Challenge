@@ -1,17 +1,23 @@
-## 100 Days Hacking Challenge – Day 1
+## Day 10: Proxies & VPNs
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Anonymization, Privacy, and Tool Duality
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+I learned how Proxies and VPNs work, and more importantly, how they serve different purposes for different users.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+**Key Learnings:**
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+### Proxies
+- **Definition:** An intermediary server that forwards client requests and masks the originating IP.
+- **Types:** Forward Proxy, Reverse Proxy, Transparent Proxy.
+- **Attacker Use:** Hide identity during reconnaissance or exploitation.
+- **Defender Use:** Filter outbound traffic and monitor suspicious activity.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+### VPNs (Virtual Private Networks)
+- **Encryption:** All traffic is encrypted end-to-end.
+- **Attacker Use:** Maintain anonymity while conducting attacks or exfiltrating data.
+- **Defender Use:** Protect personal privacy from ISP snooping and public WiFi threats.
+
+**Important Realization:** 
+The same tool is not inherently "good" or "bad"—it depends on intent and authorization.
+
+**Lesson:** Understanding both offensive and defensive applications is crucial for a well-rounded cybersecurity professional.
