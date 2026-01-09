@@ -1,17 +1,20 @@
-## 100 Days Hacking Challenge – Day 1
+## Day 13: DVWA (Damn Vulnerable Web Application)
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Web Vulnerabilities, Practical Exploitation, and Secure Coding
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+I practiced on DVWA, learning how poor coding practices lead to exploitable vulnerabilities.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+**What is DVWA?**
+- A deliberately vulnerable PHP/MySQL web application.
+- Designed for security professionals to practice exploitation safely.
+- Available in difficulty levels (Low, Medium, High).
+- Free and open-source.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+**Vulnerabilities I Practiced:**
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+### 1. SQL Injection (SQLi)
+**Description:** Inserting malicious SQL code into input fields to manipulate database queries.
+
+**Example Vulnerable Code:**
+```php
+$query = "SELECT * FROM users WHERE username='" . $_POST['username'] . "'";
