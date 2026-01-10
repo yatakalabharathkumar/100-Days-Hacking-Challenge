@@ -1,17 +1,21 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 14: Network Reconnaissance & Topology Mapping
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Topic:** Network Scanning, Enumeration, and Topology  
+**Tools:** `Zenmap`, `Nmap`
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🚀 Overview
+Today, I focused on **Information Gathering**, specifically analyzing how much data can be extracted from a single "Intense Scan" using **Zenmap** (the Nmap GUI). The goal was to understand the attacker's perspective: *mapping before attacking*.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+### 🔍 Key Learnings
+1.  **The Path Matters:** It’s not just about the target; it’s about the journey. The scan revealed every intermediate hop (routers/gateways) between my machine and `example.com`.
+2.  **Attack Surface:** A vulnerable intermediate node can be an entry point, even if the final target is hardened.
+3.  **Data Extracted:**
+    *   Open Ports & Protocols
+    *   Service Versions (crucial for finding CVEs)
+    *   OS Fingerprinting
+    *   Network Topology Visualization
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
-
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+### 💻 Command/Technique
+Running an "Intense Scan" usually correlates to the following Nmap arguments:
+```bash
+nmap -T4 -A -v <target_domain>
