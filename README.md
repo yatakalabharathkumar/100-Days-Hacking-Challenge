@@ -1,17 +1,24 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 15/100 – Web Development Basics for Hackers
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Understanding website structure before testing its security.  
+**Topics:** HTML, CSS, JavaScript
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🌐 What I Studied
+1. **HTML (Structure):**
+   - Defines the skeleton of a webpage (headings, paragraphs, forms, buttons).
+   - Helps locate input fields and parameters that may become injection points.[web:8]
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+2. **CSS (Styling):**
+   - Controls layout, colors, fonts, and responsive design across devices.
+   - While not a direct attack surface in most cases, misconfigurations in linked resources or imports can reveal internal paths.[web:8]
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+3. **JavaScript (Client-Side Logic):**
+   - Handles input validation, DOM manipulation, and API requests.
+   - Critical for security testing: DOM-based XSS, insecure client-side validation, and exposed API endpoints.[web:6][web:8]
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+### 🔍 Why This Matters for Ethical Hacking
+- You cannot effectively test a web app without understanding how the frontend talks to the backend.
+- Knowing where data is generated, transformed, and sent is key to finding vulnerabilities like XSS, CSRF, and injection.
+
+### 📎 Notes
+This day was about strengthening fundamentals rather than running tools. The better I understand how developers think, the better I can model realistic attack paths.
