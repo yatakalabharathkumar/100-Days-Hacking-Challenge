@@ -1,24 +1,23 @@
-## 🗓️ Day 15/100 – Web Development Basics for Hackers
+## 🗓️ Day 16/100 – HTML Backgrounds & Tables
 
-**Focus:** Understanding website structure before testing its security.  
-**Topics:** HTML, CSS, JavaScript
+**Focus:** Page aesthetics and data structuring with HTML.
 
-### 🌐 What I Studied
-1. **HTML (Structure):**
-   - Defines the skeleton of a webpage (headings, paragraphs, forms, buttons).
-   - Helps locate input fields and parameters that may become injection points.[web:8]
+### ✅ What I Practiced
+- Setting page-level **background colors** and **background images** via the `<body>` tag.
+- Building tables using:
+  - `<table>` – table container
+  - `<tr>` – table row
+  - `<th>` – table header cell
+  - `<td>` – table data cell
+- Applying **table borders**, **border colors**, and **cell background colors**.
+- Using `cellspacing` and `cellpadding` to control spacing between and inside cells.
+- Styling individual rows to highlight important data (e.g., header rows, summary rows).[web:6][web:8]
 
-2. **CSS (Styling):**
-   - Controls layout, colors, fonts, and responsive design across devices.
-   - While not a direct attack surface in most cases, misconfigurations in linked resources or imports can reveal internal paths.[web:8]
+### 🔍 Why This Matters (Hacking Context)
+- Well-structured tables make it easier to see how data is rendered.
+- Understanding how HTML layout works helps when testing:
+  - Reflected data (potential XSS points)
+  - Form submissions and parameter placement
+- Strong fundamentals in markup and styling support better security testing later.
 
-3. **JavaScript (Client-Side Logic):**
-   - Handles input validation, DOM manipulation, and API requests.
-   - Critical for security testing: DOM-based XSS, insecure client-side validation, and exposed API endpoints.[web:6][web:8]
-
-### 🔍 Why This Matters for Ethical Hacking
-- You cannot effectively test a web app without understanding how the frontend talks to the backend.
-- Knowing where data is generated, transformed, and sent is key to finding vulnerabilities like XSS, CSRF, and injection.
-
-### 📎 Notes
-This day was about strengthening fundamentals rather than running tools. The better I understand how developers think, the better I can model realistic attack paths.
+Day 16 was about improving readability and structure – skills that benefit both developers and security testers.
