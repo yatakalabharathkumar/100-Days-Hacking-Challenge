@@ -1,17 +1,32 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 17: HTML Images & CSS Box Model
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Frontend visuals and layout spacing.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🖼️ HTML Images
+The `<img>` tag embeds images. The most critical attribute is `src` (Source).
+```html
+<!-- Example of a standard image insertion -->
+<img src="hacker-setup.jpg" alt="My Hacking Station" width="500">
+📦 CSS Box Model: Padding vs. Margin
+The "Box Model" wraps every HTML element.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+Content: The actual image or text.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+Padding: Space between content and the border (Inside).
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+Border: The edge around the padding.
+
+Margin: Space outside the border (Outside).
+
+Visual Analogy:
+
+Padding is like wearing a thick winter coat (adds bulk to you).
+
+Margin is like social distancing (adds space between you and others).
+
+css
+.box {
+  border: 2px solid red;
+  padding: 20px; /* Space inside the red border */
+  margin: 50px;  /* Space outside the red border */
+}
