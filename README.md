@@ -1,17 +1,27 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 18/100 – HTML Login Page & Buttons
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Building a simple login interface in pure HTML.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🔐 Login Form Structure
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+Key elements used:
+- `<form>` – wraps the login inputs and defines `action` + `method`.
+- `<label>` – associates text with input fields for accessibility.
+- `<input type="text">` – captures username or email.
+- `<input type="password">` – captures password, masked in the browser.
+- `<button type="submit">` – triggers the form submission.[web:22][web:23]
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+**Example:**
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+```html
+<form action="/login" method="post">
+  <h2>Login</h2>
+
+  <label for="username">Username or Email</label>
+  <input type="text" id="username" name="username" required>
+
+  <label for="password">Password</label>
+  <input type="password" id="password" name="password" required>
+
+  <button type="submit">Login</button>
+</form>
