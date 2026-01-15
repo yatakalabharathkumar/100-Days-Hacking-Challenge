@@ -1,17 +1,20 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 19/100 – HTML5 Audio & Video Tags
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Native multimedia embedding in HTML5.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🎵 Audio Implementation
+```html
+<audio controls preload="metadata">
+  <source src="background-music.mp3" type="audio/mpeg">
+  <source src="background-music.ogg" type="audio/ogg">
+  Your browser does not support the audio element.
+</audio>
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+### 🎥 Video Implementation
+<video width="800" height="450" controls poster="thumbnail.jpg">
+  <source src="tutorial.mp4" type="video/mp4">
+  <source src="tutorial.webm" type="video/webm">
+  <track src="captions.vtt" kind="subtitles" srclang="en" label="English">
+</video>
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
-
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+✅ Key Attributes Learnedcontrols – Shows native play/pause/volume UIsrc / <source> – Media file location + formatposter – Video thumbnail before playbackpreload – Loading strategy (auto/metadata/none)loop autoplay muted – Playback behavior🔍 Security ContextPotential Attack Surfaces:File upload vulnerabilities in user media submissionXSS via src attribute manipulationDoS via large media file uploadsMetadata leakage in EXIF/IPTC dataDay 19 Takeaway: Native HTML5 media makes websites engaging but introduces new security considerations around file handling and user content.
