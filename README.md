@@ -1,16 +1,22 @@
-## 🗓️ Day 23/100 – Introduction to Mutillidae
+## 🗓️ Day 24/100 – Modern Web Hacking with OWASP Juice Shop
 
-**Focus:** Setting up and exploring the OWASP Mutillidae II lab environment.
+**Focus:** Identifying logic flaws and validation errors in modern Single Page Applications (SPAs).
 
-### 🕷️ What is Mutillidae?
-Mutillidae is a deliberately vulnerable web application that implements the OWASP Top 10 vulnerabilities. It provides a realistic environment for practicing web application security.
+### 🧃 Lab Environment: OWASP Juice Shop
+Unlike Mutillidae (legacy PHP), Juice Shop is built with a modern stack (Node.js, Express, Angular). It represents the security challenges of today's e-commerce sites.
 
-### ⚔️ Key Activities
-1.  **Lab Integration:** Successfully accessed Mutillidae (typically hosted on a local server or VM like Metasploitable).
-2.  **Reconnaissance:** Explored the application structure to identify potential attack surfaces (forms, URL parameters, login pages).
-3.  **Attack Simulation:**
-    *   Simulated real-world attacks commonly found in poorly maintained websites.
-    *   Tested basic injection vectors to observe application behavior.
+### 🛡️ Vulnerabilities Explored
+**1. Business Logic Flaws**
+*   *Concept:* Manipulating the workflow of the application rather than just the code.
+*   *Example:* Modifying request parameters to bypass payment gates or alter order pricing.
 
-### 🧠 Learning Outcome
-Mutillidae is excellent for understanding **legacy vulnerabilities**. It highlights how "technical debt" and poor maintenance creating lasting security risks in production environments. It serves as a comprehensive practice ground for manual exploitation techniques.
+**2. Insecure Authentication**
+*   *Concept:* Weaknesses in how the app handles user identity.
+*   *Example:* Testing for weak password policies, lack of MFA, or session token mishandling.
+
+**3. Improper Input Validation**
+*   *Concept:* Trusting client-side checks without backend verification.
+*   *Example:* Sending malicious payloads that the frontend UI blocks, but the backend API accepts via direct requests (using Burp Suite).
+
+### 🧠 Key Takeaway
+Modern frameworks solve many old problems (like some basic XSS), but they introduce new risks around **API security** and **business logic**. Security is not just about code; it's about the integrity of the entire process.
