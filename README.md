@@ -1,41 +1,27 @@
-## 🗓️ Day 30/100 – 1 Month Milestone! 🏆
+## 🗓️ Day 31/100 – Directory Brute-Forcing (Content Discovery)
 
-**Focus:** Specialized WordPress Vulnerability Scanning with WPScan.
+**Focus:** Identifying hidden files, directories, and misconfigurations using enumeration tools.
 
-### 🎉 Milestone Reflection
-**30 Days Complete.**
-From basic networking concepts to executing automated attacks against databases and CMS platforms. Consistency is the key differentiator.
+### 🔍 What is Directory Brute-Forcing?
+It is the process of sending HTTP requests for common file and directory names (from a wordlist) to see if the server responds with a 200 OK or 403 Forbidden, revealing resources that are not linked in the web application.
 
-### 🕵️‍♂️ Tool: WPScan
-WPScan is a black box WordPress vulnerability scanner.
+### 🛠️ Tools Used
+*   **Gobuster:** Fast, Go-based directory scanner.
+*   **Dirb:** Classic content scanner.
+*   **FFuF:** Fast web fuzzer.
 
-**1. Basic Scan**
-```bash
-wpscan --url http://target-wordpress-site.com
+### 🚩 Discoveries (Common Misconfigurations)
+1.  **Hidden Admin Portals:**
+    *   Paths like `/admin`, `/login`, `/manager` often bypassed frontend navigation but remained accessible.
+2.  **Sensitive Configuration Files:**
+    *   Found `.env` (environment variables) containing API keys and DB credentials.
+    *   Found `.git/HEAD` exposing version control history.
+3.  **Backup Files:**
+    *   Developers often leave `backup.zip` or `index.php.bak` in the web root, allowing source code download.
 
-Identifies core version, active theme, and installed plugins.
+### 🛡️ Remediation
+*   **WAF Rules:** Block excessive 404 requests (scanning signatures).
+*   **Clean Web Root:** Remove all non-essential files (backups, configs).
+*   **Access Control:** Use IP allow-listing for admin panels.
 
-2. User Enumeration
-
-bash
-wpscan --url http://target.com --enumerate u
-Risk: Reveals valid usernames (e.g., admin, editor), reducing brute-force complexity by 50%.
-
-3. Vulnerable Plugin Detection
-
-bash
-wpscan --url http://target.com --enumerate p --plugins-detection aggressive
-Risk: Matches installed plugin versions against the WPScan Vulnerability Database (WPVDB) to find known exploits.
-
-4. Password Brute Force
-
-bash
-wpscan --url http://target.com --passwords /path/to/wordlist.txt --usernames admin
-🛡️ Defensive Takeaways
-Disable User Enumeration: Block access to /?author=1 endpoints.
-
-Update Everything: Auto-update plugins and themes.
-
-Limit Login Attempts: Install security plugins (Wordfence/Sucuri) to stop brute-force.
-
-Hide Version Info: Remove generator meta tags to slow down reconnaissance.
+**Day 31 Takeaway:** If a file exists on a public server, it *will* be found. Obscurity is not security.
