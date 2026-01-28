@@ -1,27 +1,21 @@
-## 🗓️ Day 31/100 – Directory Brute-Forcing (Content Discovery)
+## 🗓️ Day 32/100 – OWASP ZAP (Automated Scanning)
 
-**Focus:** Identifying hidden files, directories, and misconfigurations using enumeration tools.
+**Focus:** Using automated tools to map attack surfaces and detect common vulnerabilities.
 
-### 🔍 What is Directory Brute-Forcing?
-It is the process of sending HTTP requests for common file and directory names (from a wordlist) to see if the server responds with a 200 OK or 403 Forbidden, revealing resources that are not linked in the web application.
+### ⚡ What is OWASP ZAP?
+The Zed Attack Proxy (ZAP) is a free, open-source penetration testing tool maintained by OWASP. It acts as a "Man-in-the-Middle" proxy (similar to Burp Suite) but specializes in automated scanning.
 
-### 🛠️ Tools Used
-*   **Gobuster:** Fast, Go-based directory scanner.
-*   **Dirb:** Classic content scanner.
-*   **FFuF:** Fast web fuzzer.
+### 🛠️ Workflow Executed
+1.  **Spidering (Crawling):**
+    *   ZAP automatically navigated the application to discover all accessible URLs, including those not visible in the navigation menu.
+    *   *Result:* Complete site map generated in <2 minutes.
 
-### 🚩 Discoveries (Common Misconfigurations)
-1.  **Hidden Admin Portals:**
-    *   Paths like `/admin`, `/login`, `/manager` often bypassed frontend navigation but remained accessible.
-2.  **Sensitive Configuration Files:**
-    *   Found `.env` (environment variables) containing API keys and DB credentials.
-    *   Found `.git/HEAD` exposing version control history.
-3.  **Backup Files:**
-    *   Developers often leave `backup.zip` or `index.php.bak` in the web root, allowing source code download.
+2.  **Active Scanning:**
+    *   ZAP injected malicious payloads (SQLi, XSS, CRLF) into every identified parameter.
+    *   *Result:* Detected 15+ alerts ranging from "Missing Security Headers" (Low) to "Reflected XSS" (High).
 
-### 🛡️ Remediation
-*   **WAF Rules:** Block excessive 404 requests (scanning signatures).
-*   **Clean Web Root:** Remove all non-essential files (backups, configs).
-*   **Access Control:** Use IP allow-listing for admin panels.
+3.  **Passive Scanning:**
+    *   Analyzed traffic without sending attacks to find issues like sensitive cookies without `HttpOnly` or missing `CSP` headers.
 
-**Day 31 Takeaway:** If a file exists on a public server, it *will* be found. Obscurity is not security.
+### 🧠 Learning Outcome
+Automation is a double-edged sword. It helps defenders find holes quickly, but it also allows script kiddies to launch sophisticated scans with zero knowledge. A robust security program must include regular automated scans.
