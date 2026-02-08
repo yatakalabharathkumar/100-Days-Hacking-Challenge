@@ -1,17 +1,29 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 43/100 – JavaScript Static Analysis
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Analyzing client-side code to find logic flaws, hidden endpoints, and secrets.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 📜 Why Analyze JavaScript?
+Modern Single Page Applications (SPAs) push massive amounts of logic to the client. This code contains the blueprint of the application's API and functionality.
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+### 🕵️‍♂️ Analysis Workflow
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+**1. Secret Hunting**
+*   **Technique:** Grepping for keywords like `api_key`, `token`, `secret`, `password`.
+*   **Tools:** JSLinkFinder, SecretFinder.
+*   **Risk:** Exposure of third-party credentials allowing lateral movement.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+**2. Endpoint Discovery**
+*   **Technique:** Extracting URLs and paths from the code to find "shadow APIs" (admin endpoints or beta features not linked in the UI).
+*   **Regex:** `/[a-zA-Z0-9\-\_\/]+\.php/` or `/api\/v[0-9]\/[a-z]+/`
+
+**3. Logic Flaws**
+*   **Scenario:** Found a variable `isPremiumUser = false`.
+*   **Exploit:** Used Console to set `isPremiumUser = true` to unlock features.
+*   **Lesson:** Client-side state is untrusted.
+
+### 🛠️ Tools Used
+*   **Chrome DevTools:** Sources Tab (Pretty Print).
+*   **Burp Suite:** "JS Miner" extension.
+*   **Source Maps:** Reverting minified code to original source structure.
+
+**Day 43 Takeaway:** Minification is not encryption. Client-side code is open-source to the attacker.
