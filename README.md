@@ -1,47 +1,43 @@
-## 🗓️ Day 47/100 – Authorization Bypass & Privilege Escalation
+## 🗓️ Day 48/100 – CTF-Style Pentest as Incident Response Drill
 
-**Focus:** How weak or missing authorization checks allow a regular user to become an admin (vertical privilege escalation).
+**Focus:** Using a CTF lab not just to hack, but to simulate a real incident from attack to response.
 
-### 🔐 Concepts
+### 🎯 Objective
 
-- **Authorization vs Authentication**
-  - Authentication: "Who are you?"
-  - Authorization: "What are you allowed to do?"
-- **Vertical Privilege Escalation**
-  - Moving from low-privileged roles (user) to high-privileged roles (admin/moderator).  
+Treat a CTF environment like:
+- A small production network that just got breached.
+- A place to practice both **offense (red)** and **defense (blue)**.
 
-### 🧪 Test Scenario (Demo)
+### 🟥 Red Team Phase (Attacker View)
 
-The app exposes:
-- `/user/profile` – normal user endpoint
-- `/admin/users` – should be admin-only
+- Recon: Port scans, service fingerprinting, basic enumeration.
+- Initial access: Exploiting a web or service vuln to gain a foothold.
+- Privilege escalation: Local privesc on the compromised host.
+- Lateral movement: Pivoting to another machine or service inside the lab.
 
-Steps:
-1. Log in as a normal user.
-2. Capture a request using Burp Suite or a proxy.
-3. Manually request:
-   - `GET /admin/users`
-   - Or edit a request body:
-     ```json
-     {
-       "user_id": 123,
-       "role": "admin"   // changed from "user"
-     }
-     ```
-4. If the server responds with **200 OK** and applies the change, you have an authorization bypass.
+Each step, I noted:
+- Commands used.
+- Indicators left behind (logs, processes, new files, suspicious connections).
 
-### ⚙️ Common Weak Patterns
+### 🟦 Blue Team Phase (Defender View)
 
-- Relying on **hidden buttons/links** instead of backend checks.
-- Trusting client-controlled fields like `role`, `is_admin`, or `permissions`.
-- Missing middleware or guards on "internal" admin routes.
+Switched to “incident responder” mode:
+- Reviewed system and application logs for:
+  - Failed logins, strange user agents, odd process launches.
+- Looked at network traces for:
+  - Suspicious outbound connections, repeated scans, lateral movement.
+- Tried to answer:
+  - When did the compromise start?
+  - Which host was patient zero?
+  - What data or systems were touched?
 
-### 🛡️ Hardening Strategies
+### 🧠 Takeaways
 
-- Implement centralized authorization checks for every sensitive route.
-- Never trust client-supplied role or privilege fields.
-- Use well-defined roles/permissions and enforce them on the server.
-- Add logging for access to admin endpoints and review regularly.
+- CTFs can be more than puzzles; they are **great sandboxes for IR practice**.
+- Thinking like a SOC analyst changes how you attack:
+  - You start noticing what traces your tools and payloads leave behind.
+- Incident response is a loop:
+  - Detect → Analyze → Contain → Eradicate → Recover → Document.
 
-**Day 47 Takeaway:**  
-Broken access control is often just "missing code" — one forgotten check can turn any user into an admin.
+**Day 48 Summary:**  
+Today’s “game” wasn’t just about capturing flags, it was about telling the full breach story.
