@@ -1,43 +1,48 @@
-## 🗓️ Day 48/100 – CTF-Style Pentest as Incident Response Drill
+## 🗓️ Day 49/100 – Professional Pentest & Bug Bounty Reporting
 
-**Focus:** Using a CTF lab not just to hack, but to simulate a real incident from attack to response.
+**Focus:** Practicing how to turn raw findings into professional security reports.
 
-### 🎯 Objective
+### 📄 Penetration Testing Report Structure
 
-Treat a CTF environment like:
-- A small production network that just got breached.
-- A place to practice both **offense (red)** and **defense (blue)**.
+Reviewed common penetration testing report templates and mapped my findings into:
 
-### 🟥 Red Team Phase (Attacker View)
+- Executive Summary
+  - Non-technical, short, and focused.
+  - What was tested, overall risk level, top issues, and key recommendations.
 
-- Recon: Port scans, service fingerprinting, basic enumeration.
-- Initial access: Exploiting a web or service vuln to gain a foothold.
-- Privilege escalation: Local privesc on the compromised host.
-- Lateral movement: Pivoting to another machine or service inside the lab.
+- Methodology & Scope
+  - In-scope assets, timelines, and testing approach (black/gray/white box).
+  - Relevant tools and techniques (only those that add context).
 
-Each step, I noted:
-- Commands used.
-- Indicators left behind (logs, processes, new files, suspicious connections).
+- Technical Findings
+  For each vulnerability:
+  - Title and severity (often using CVSS).
+  - Description and affected assets.
+  - Steps to reproduce and PoC.
+  - Impact and business risk.
+  - Remediation guidance and references.
 
-### 🟦 Blue Team Phase (Defender View)
+### 🐞 Bug Bounty Report Template
 
-Switched to “incident responder” mode:
-- Reviewed system and application logs for:
-  - Failed logins, strange user agents, odd process launches.
-- Looked at network traces for:
-  - Suspicious outbound connections, repeated scans, lateral movement.
-- Tried to answer:
-  - When did the compromise start?
-  - Which host was patient zero?
-  - What data or systems were touched?
+I also practiced filling a bug bounty-style template:
+
+- Title
+- Target / asset
+- Vulnerability type (XSS, IDOR, SQLi, etc.)
+- Summary (what the bug is and why it matters)
+- Steps to reproduce (clear, numbered)
+- Proof-of-concept (payloads, requests, screenshots)
+- Impact (what an attacker can achieve)
+- Suggested fix
+- Environment details (domain, version, account type)
 
 ### 🧠 Takeaways
 
-- CTFs can be more than puzzles; they are **great sandboxes for IR practice**.
-- Thinking like a SOC analyst changes how you attack:
-  - You start noticing what traces your tools and payloads leave behind.
-- Incident response is a loop:
-  - Detect → Analyze → Contain → Eradicate → Recover → Document.
+A solid report should:
 
-**Day 48 Summary:**  
-Today’s “game” wasn’t just about capturing flags, it was about telling the full breach story.
+- Be **clear** enough for triagers and engineers to follow.
+- Be **concise** enough for managers and executives to grasp quickly.
+- Be **actionable**, with concrete and realistic remediation steps.
+
+**Day 49 Summary:**  
+Exploits get you flags; reports get you trust, payment, and long-term opportunities.
