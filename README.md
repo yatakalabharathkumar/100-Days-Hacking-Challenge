@@ -1,17 +1,46 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 50/100 – Reporting as a Core Hacking Skill
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Learning to document findings professionally using pentest and bug bounty report templates.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 📄 Penetration Testing Reports
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+Today I reviewed multiple penetration testing report templates and practiced shaping my notes into:
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+- Executive Summary
+  - Goals of the engagement and what was in scope.
+  - Overall risk posture and key, high-impact issues.
+  - Written for non-technical leadership.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+- Scope & Methodology
+  - Assets, dates, and constraints.
+  - Approach (external/internal, web app, network, etc.).
+  - High-level techniques used.
+
+- Technical Findings
+  For each vulnerability:
+  - Title and severity.
+  - Description and affected components.
+  - Steps to reproduce with evidence (requests, screenshots).
+  - Impact on the business.
+  - Recommended remediation.
+
+### 🐞 Bug Bounty Style Reports
+
+I also practiced filling out bug bounty templates:
+
+- Title, target, and vulnerability category.
+- Clear summary of what’s wrong and why it matters.
+- Reproduction steps (numbered, copy-paste friendly).
+- PoC payloads and evidence (screenshots, HAR, videos).
+- Impact and suggested fix.
+- Optional: environment and timeline details.
+
+### 🧠 Takeaways
+
+- Good reports:
+  - Make validation easy for triagers and engineers.
+  - Make risk obvious for managers.
+  - Make your work look professional and reliable.
+
+**Day 50 Summary:**  
+Hacking finds the problems, but reporting is what turns those problems into decisions, fixes, and a real cybersecurity career.
