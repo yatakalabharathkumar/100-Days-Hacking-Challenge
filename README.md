@@ -1,48 +1,45 @@
-## 🗓️ Day 49/100 – Professional Pentest & Bug Bounty Reporting
+## 🗓️ Day 51/100 – JavaScript Attacks & Client-Side Vulnerabilities
 
-**Focus:** Practicing how to turn raw findings into professional security reports.
+**Focus:** Understanding how JavaScript-based attacks abuse client-side weaknesses to impact overall web security.
 
-### 📄 Penetration Testing Report Structure
+### 🔍 Attacks Studied
 
-Reviewed common penetration testing report templates and mapped my findings into:
+- Cross-Site Scripting (XSS)
+  - Injecting malicious JavaScript into pages rendered for other users.
+  - Variants: reflected, stored, DOM-based.
+  - Impact: session theft, keylogging, CSRF via script, UI manipulation.
 
-- Executive Summary
-  - Non-technical, short, and focused.
-  - What was tested, overall risk level, top issues, and key recommendations.
+- DOM-Based Attacks
+  - Vulnerabilities in client-side code using dangerous sinks
+    (innerHTML, document.write, location, etc.).
+  - The exploit can occur entirely in the browser without a modified HTTP response.
 
-- Methodology & Scope
-  - In-scope assets, timelines, and testing approach (black/gray/white box).
-  - Relevant tools and techniques (only those that add context).
+- Cross-Site Request Forgery (CSRF)
+  - Forcing a logged-in user’s browser to send unintended state-changing requests.
+  - Relies on existing cookies and trust in the browser’s authenticated session.
 
-- Technical Findings
-  For each vulnerability:
-  - Title and severity (often using CVSS).
-  - Description and affected assets.
-  - Steps to reproduce and PoC.
-  - Impact and business risk.
-  - Remediation guidance and references.
+- Session Hijacking
+  - Stealing or abusing session identifiers (often via XSS, insecure cookies, or injected scripts).
+  - Can lead to full account takeover.
 
-### 🐞 Bug Bounty Report Template
+- Clickjacking
+  - Embedding a legitimate site in a hidden/transparent iframe.
+  - Tricking users into clicking on UI elements they don’t actually see.
 
-I also practiced filling a bug bounty-style template:
+- Malicious Script Injections
+  - Injecting or swapping JavaScript through vulnerable inputs, third-party scripts, or compromised assets.
 
-- Title
-- Target / asset
-- Vulnerability type (XSS, IDOR, SQLi, etc.)
-- Summary (what the bug is and why it matters)
-- Steps to reproduce (clear, numbered)
-- Proof-of-concept (payloads, requests, screenshots)
-- Impact (what an attacker can achieve)
-- Suggested fix
-- Environment details (domain, version, account type)
+### 🧠 Key Understanding
 
-### 🧠 Takeaways
+- Browsers happily execute JavaScript that reaches the page, whether it came from:
+  - Unsanitized user input.
+  - Insecure DOM manipulation.
+  - Compromised or untrusted external scripts.
 
-A solid report should:
+- Without strong validation, encoding, and client-side-aware defenses, these attacks can:
+  - Steal data and sessions.
+  - Perform actions on behalf of users.
+  - Tamper with what users see and trust.
 
-- Be **clear** enough for triagers and engineers to follow.
-- Be **concise** enough for managers and executives to grasp quickly.
-- Be **actionable**, with concrete and realistic remediation steps.
-
-**Day 49 Summary:**  
-Exploits get you flags; reports get you trust, payment, and long-term opportunities.
+**Day 51 Summary:**
+Client-side vulnerabilities are not just “frontend bugs” — they are a direct path to serious compromise when JavaScript is abused.
