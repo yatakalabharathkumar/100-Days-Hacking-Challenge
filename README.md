@@ -1,45 +1,55 @@
-## 🗓️ Day 51/100 – JavaScript Attacks & Client-Side Vulnerabilities
+## 🗓️ Day 52/100 – SQL Injection Basics
 
-**Focus:** Understanding how JavaScript-based attacks abuse client-side weaknesses to impact overall web security.
+**Focus:** Understanding how SQL injection works and why unsafe query building is dangerous.
 
-### 🔍 Attacks Studied
+### 🔍 What is SQL Injection?
 
-- Cross-Site Scripting (XSS)
-  - Injecting malicious JavaScript into pages rendered for other users.
-  - Variants: reflected, stored, DOM-based.
-  - Impact: session theft, keylogging, CSRF via script, UI manipulation.
+SQL Injection happens when:
+- An application builds SQL queries by concatenating user input directly into the query string.
+- The database cannot distinguish between the intended command and injected data.
 
-- DOM-Based Attacks
-  - Vulnerabilities in client-side code using dangerous sinks
-    (innerHTML, document.write, location, etc.).
-  - The exploit can occur entirely in the browser without a modified HTTP response.
+Example vulnerable pattern:
 
-- Cross-Site Request Forgery (CSRF)
-  - Forcing a logged-in user’s browser to send unintended state-changing requests.
-  - Relies on existing cookies and trust in the browser’s authenticated session.
+```sql
+SELECT * FROM users
+WHERE username = '`<user_input>`'
+AND password = '`<user_input>`';
+If user input is:
 
-- Session Hijacking
-  - Stealing or abusing session identifiers (often via XSS, insecure cookies, or injected scripts).
-  - Can lead to full account takeover.
+username: admin
 
-- Clickjacking
-  - Embedding a legitimate site in a hidden/transparent iframe.
-  - Tricking users into clicking on UI elements they don’t actually see.
+password: ' OR 1=1--
 
-- Malicious Script Injections
-  - Injecting or swapping JavaScript through vulnerable inputs, third-party scripts, or compromised assets.
+The final query becomes:
 
-### 🧠 Key Understanding
+sql
+SELECT * FROM users
+WHERE username = 'admin'
+AND password = '' OR 1=1--';
+1=1 is always true, so the authentication check is effectively bypassed.
 
-- Browsers happily execute JavaScript that reaches the page, whether it came from:
-  - Unsanitized user input.
-  - Insecure DOM manipulation.
-  - Compromised or untrusted external scripts.
+🧪 What I Practiced
+Recognizing places where applications build queries using:
 
-- Without strong validation, encoding, and client-side-aware defenses, these attacks can:
-  - Steal data and sessions.
-  - Perform actions on behalf of users.
-  - Tamper with what users see and trust.
+String concatenation
 
-**Day 51 Summary:**
-Client-side vulnerabilities are not just “frontend bugs” — they are a direct path to serious compromise when JavaScript is abused.
+Unsafely interpolated parameters
+
+Understanding basic SQLi goals:
+
+Authentication bypass
+
+Extracting data from tables
+
+Modifying or deleting data, depending on privileges
+
+Reading about more advanced SQLi paths (time-based, error-based, UNION-based).
+
+🛡️ Basic Defenses (Preview)
+Use parameterized queries / prepared statements.
+
+Avoid building SQL with string concatenation.
+
+Enforce least privilege on database accounts.
+
+Hide detailed SQL error messages from users.
