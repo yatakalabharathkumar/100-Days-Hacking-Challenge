@@ -1,55 +1,54 @@
-## 🗓️ Day 52/100 – SQL Injection Basics
+## 🗓️ Day 53/100 – Preventing SQL Injection
 
-**Focus:** Understanding how SQL injection works and why unsafe query building is dangerous.
+**Focus:** Moving from understanding SQL injection to hardening applications against it.
 
-### 🔍 What is SQL Injection?
+### ✅ Parameterized Queries / Prepared Statements
 
-SQL Injection happens when:
-- An application builds SQL queries by concatenating user input directly into the query string.
-- The database cannot distinguish between the intended command and injected data.
-
-Example vulnerable pattern:
+Replaced vulnerable patterns like:
 
 ```sql
-SELECT * FROM users
-WHERE username = '`<user_input>`'
-AND password = '`<user_input>`';
-If user input is:
-
-username: admin
-
-password: ' OR 1=1--
-
-The final query becomes:
+-- vulnerable
+query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
+with parameterized forms:
 
 sql
-SELECT * FROM users
-WHERE username = 'admin'
-AND password = '' OR 1=1--';
-1=1 is always true, so the authentication check is effectively bypassed.
+-- safe pattern
+query = "SELECT * FROM users WHERE username = ? AND pass = ?";
+setParam(1, user);
+setParam(2, pass);
+Key points:
 
-🧪 What I Practiced
-Recognizing places where applications build queries using:
+SQL and data are sent separately.
 
-String concatenation
+The database treats parameters as literal values, not part of the SQL syntax.
 
-Unsafely interpolated parameters
+This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
 
-Understanding basic SQLi goals:
+🧰 ORMs and Query Builders
+ORMs (and query builders) help generate parameterized queries by default.
 
-Authentication bypass
+Still important to:
 
-Extracting data from tables
+Avoid manual string concatenation.
 
-Modifying or deleting data, depending on privileges
+Use the ORM’s parameter APIs instead of raw interpolated SQL.
 
-Reading about more advanced SQLi paths (time-based, error-based, UNION-based).
+🧱 Extra Layers
+Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
 
-🛡️ Basic Defenses (Preview)
-Use parameterized queries / prepared statements.
+Use least-privilege database accounts; the app should not connect as a superuser.
 
-Avoid building SQL with string concatenation.
+Suppress detailed SQL error messages from end users.
 
-Enforce least privilege on database accounts.
+🔥 WAF vs. Secure Code
+Web Application Firewalls can:
 
-Hide detailed SQL error messages from users.
+Block known SQLi payloads with signatures.
+
+Use heuristic and behavioral analysis to detect suspicious patterns.
+
+But:
+
+Misconfigurations or novel payloads can bypass WAF rules.
+
+WAFs should be additional protection, not the main fix.
