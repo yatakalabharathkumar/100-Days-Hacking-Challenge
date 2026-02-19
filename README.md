@@ -1,54 +1,42 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 54/100 – File Upload Vulnerabilities
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Understanding how insecure file upload functionality can be abused and how to secure it.
 
-### ✅ Parameterized Queries / Prepared Statements
+### ⚠️ What Can Go Wrong?
 
-Replaced vulnerable patterns like:
+- Unrestricted file upload:
+  - Any file type is accepted (scripts, executables, archives).
+  - Files are stored in web-accessible locations where they might be executed.
+- Attacker goals:
+  - Upload a web shell to get remote command execution.
+  - Host phishing pages or malware.
+  - Overwrite or plant files in sensitive paths (if path controls are weak).
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+### 🧪 Techniques I Read About / Practiced
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+- Extension and MIME/type bypass:
+  - Using names like `shell.php.jpg` or `shell.asp;.jpg`.
+  - Sending inconsistent `Content-Type` headers to fool basic checks.
+- Path-related tricks:
+  - Uploading via endpoints that allow path traversal to escape the intended directory.
+- Triggering execution:
+  - Accessing the uploaded script via direct URL if the directory is executable.
+  - Abusing server/parsing misconfigurations.
 
-SQL and data are sent separately.
+### 🛡️ Basic Hardening Ideas
 
-The database treats parameters as literal values, not part of the SQL syntax.
+- Allowlist only specific, safe file types (e.g., certain image formats).
+- Validate:
+  - File extension
+  - MIME type
+  - Magic bytes / content where possible
+- Store uploads:
+  - Outside the webroot or in non-executable locations.
+  - With randomized, server-side generated filenames.
+- Apply:
+  - Size limits
+  - Malware scanning where appropriate
+  - Extra checks before serving files back to users
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
-
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
-
-Still important to:
-
-Avoid manual string concatenation.
-
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
-
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
-
-Use least-privilege database accounts; the app should not connect as a superuser.
-
-Suppress detailed SQL error messages from end users.
-
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
-
-Block known SQLi payloads with signatures.
-
-Use heuristic and behavioral analysis to detect suspicious patterns.
-
-But:
-
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+**Day 54 Summary:**
+File uploads are powerful, but if you don’t treat every upload as hostile by default, you’re effectively offering attackers a write primitive on your server.
