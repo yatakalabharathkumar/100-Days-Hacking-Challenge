@@ -1,42 +1,53 @@
-## 🗓️ Day 54/100 – File Upload Vulnerabilities
+## 🗓️ Day 55/100 – Linux Privilege Escalation Basics
 
-**Focus:** Understanding how insecure file upload functionality can be abused and how to secure it.
+**Focus:** What to do after getting a low-privilege shell on a Linux system.
 
-### ⚠️ What Can Go Wrong?
+### 🔍 Step 1: Enumeration
 
-- Unrestricted file upload:
-  - Any file type is accepted (scripts, executables, archives).
-  - Files are stored in web-accessible locations where they might be executed.
-- Attacker goals:
-  - Upload a web shell to get remote command execution.
-  - Host phishing pages or malware.
-  - Overwrite or plant files in sensitive paths (if path controls are weak).
+Questions to answer:
 
-### 🧪 Techniques I Read About / Practiced
+- System:
+  - OS and kernel version
+  - Installed packages and services
+- Users & Privileges:
+  - Who am I? What groups am I in?
+  - Who can use sudo, and for what commands?
+- Files & Permissions:
+  - World-writable files and directories
+  - SUID/SGID binaries
+- Automation & Tasks:
+  - Cron jobs and timers, who owns them, and what they run
+- Secrets:
+  - Config files, history files, keys, and stored credentials
 
-- Extension and MIME/type bypass:
-  - Using names like `shell.php.jpg` or `shell.asp;.jpg`.
-  - Sending inconsistent `Content-Type` headers to fool basic checks.
-- Path-related tricks:
-  - Uploading via endpoints that allow path traversal to escape the intended directory.
-- Triggering execution:
-  - Accessing the uploaded script via direct URL if the directory is executable.
-  - Abusing server/parsing misconfigurations.
+Tools that help:
+- `LinPEAS`, `LinEnum`, and manual one-liner enumeration. 
 
-### 🛡️ Basic Hardening Ideas
+### ⚙️ Common Privesc Paths Reviewed
 
-- Allowlist only specific, safe file types (e.g., certain image formats).
-- Validate:
-  - File extension
-  - MIME type
-  - Magic bytes / content where possible
-- Store uploads:
-  - Outside the webroot or in non-executable locations.
-  - With randomized, server-side generated filenames.
-- Apply:
-  - Size limits
-  - Malware scanning where appropriate
-  - Extra checks before serving files back to users
+- **Sudo Misconfigurations**
+  - Users allowed to run certain programs as root.
+  - If those programs can be escaped to a shell (GTFOBins), that often means root.
 
-**Day 54 Summary:**
-File uploads are powerful, but if you don’t treat every upload as hostile by default, you’re effectively offering attackers a write primitive on your server.
+- **SUID Binaries**
+  - Binaries with the SUID bit set run with the owner’s privileges.
+  - Abusing poorly chosen or custom SUID programs can lead to escalation.
+
+- **Cron Jobs**
+  - Privileged cron tasks that call scripts in writable locations.
+  - Editing those scripts to execute a shell with elevated privileges.
+
+- **Weak Permissions & Stored Secrets**
+  - World-readable config files containing passwords or keys.
+  - SSH keys or database credentials left on disk.
+
+### 🧠 Mindset
+
+- Privilege escalation is a process:
+  1. Enumerate.
+  2. Identify misconfigurations.
+  3. Select a safe, reliable path.
+  4. Exploit and confirm.
+
+**Day 55 Summary:**
+Getting a shell is only half the story—Linux privilege escalation is about turning that foothold into meaningful control by systematically hunting for weak links.
