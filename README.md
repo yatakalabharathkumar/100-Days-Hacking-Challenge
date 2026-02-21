@@ -1,54 +1,47 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 56/100 – Windows Privilege Escalation Basics
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Understanding how to escalate from a low-privileged user to Administrator / SYSTEM on Windows.
 
-### ✅ Parameterized Queries / Prepared Statements
+### 🔍 Step 1: Enumeration
 
-Replaced vulnerable patterns like:
+Questions to answer:
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+- Who am I?
+  - Current user, groups, token privileges.
+- What is the system?
+  - Windows version, patches, installed software.
+- What is running?
+  - Services, scheduled tasks, startup items.
+- What can I touch?
+  - File/registry permissions, writable directories, service binaries.
+- Any secrets?
+  - Saved credentials, config files, PowerShell history, registry hives.
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+Helpful tools:
+- `WinPEAS` (broad automated enumeration)
+- `PowerUp` (service/task misconfig checks)
+- `Seatbelt` (situational awareness)
 
-SQL and data are sent separately.
+### ⚙️ Common Windows Privesc Ideas
 
-The database treats parameters as literal values, not part of the SQL syntax.
+- **Service Misconfigurations**
+  - Services running as SYSTEM but with weak file or registry ACLs.
+  - If you can change the service binary/path and restart the service, you can execute code as SYSTEM.
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
+- **Scheduled Tasks**
+  - Tasks running with high privileges but referencing scripts/binaries in writable locations.
+  - Editing those files to run a payload.
 
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
+- **Weak Permissions & Credentials**
+  - World-readable config files holding passwords or API keys.
+  - Credentials stored in scripts, registry, or command histories that can be reused.
 
-Still important to:
+### 🧠 Mindset
 
-Avoid manual string concatenation.
+- Enumerate thoroughly, then:
+  1. Identify misconfigurations and secrets.
+  2. Map them to known escalation techniques.
+  3. Exploit safely and verify elevation (Administrator / SYSTEM).
 
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
-
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
-
-Use least-privilege database accounts; the app should not connect as a superuser.
-
-Suppress detailed SQL error messages from end users.
-
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
-
-Block known SQLi payloads with signatures.
-
-Use heuristic and behavioral analysis to detect suspicious patterns.
-
-But:
-
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+**Day 56 Summary:**
+On Windows, privilege escalation is about understanding how services, tasks, permissions, and credentials fit together—and exploiting the one place where that model breaks.
