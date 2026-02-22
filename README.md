@@ -1,17 +1,15 @@
-## 100 Days Hacking Challenge – Day 1
+🧩 Day 57/100 – Basic Active Directory Attacks
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+Today I stepped into Active Directory (AD) land and saw how once you’re inside a Windows domain, the real game is abusing identity and trust.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+I explored:
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+AD enumeration: users, groups, computers, shares, and policies.
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+Basic attacks like password spraying, Kerberoasting / AS‑REP roasting concepts, and NTLM hash capture.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+How tools like BloodHound and PowerView help map attack paths from a normal user to Domain Admin.
+
+AD makes enterprise life easier—but one weak account or misconfiguration can open paths across the whole domain.
+
+#Day57 #100DaysOfEthicalHacking #ActiveDirectory #RedTeam #WindowsSecurity
