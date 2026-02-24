@@ -1,54 +1,49 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 59/100 – SSRF Introduction & Basic Labs
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Learning what Server-Side Request Forgery is and solving basic SSRF labs.
 
-### ✅ Parameterized Queries / Prepared Statements
+### 🌐 What is SSRF?
 
-Replaced vulnerable patterns like:
+Server-Side Request Forgery (SSRF) happens when:
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+- An application sends HTTP requests based on a **user-supplied URL or host**, and
+- It does not properly validate or restrict where that server-side request can go.
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+As a result, an attacker can:
+- Make the server send requests to internal services or external targets.
+- Potentially read responses that would normally be inaccessible from the internet.
 
-SQL and data are sent separately.
+### 🧪 Lab Concepts
 
-The database treats parameters as literal values, not part of the SQL syntax.
+Example pattern:
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
+```http
+POST /check-stock HTTP/1.1
+Host: vulnerable-app.com
 
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
+stockUrl=http://internal-api/stock/item/1
+If stockUrl is user-controlled and not validated, it can be changed to:
 
-Still important to:
+http://localhost/admin
 
-Avoid manual string concatenation.
+http://192.168.0.10:8080/
 
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
+Cloud metadata URL such as http://169.254.169.254/latest/meta-data/
 
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
+Basic labs showed:
 
-Use least-privilege database accounts; the app should not connect as a superuser.
+How to modify parameters to scan internal IP ranges.
 
-Suppress detailed SQL error messages from end users.
+How to access a local admin panel through a stock check or similar feature.
 
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
+In some scenarios, how the server’s response reveals internal information directly.
 
-Block known SQLi payloads with signatures.
+🛡️ Defensive Ideas (Preview)
+Use allowlists of permitted domains/paths for server-side requests.
 
-Use heuristic and behavioral analysis to detect suspicious patterns.
+Block requests to internal ranges and metadata endpoints at the code and network levels.
 
-But:
+Avoid exposing raw responses from internal services back to the user.
 
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+Day 59 Summary:
+Today’s labs showed that if a server will fetch arbitrary URLs for you, it can become an unwilling proxy into its own internal network.
