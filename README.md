@@ -1,54 +1,46 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 60/100 – Advanced SSRF Filters & Bypasses
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Understanding how SSRF protections are commonly implemented and how attackers bypass them.
 
-### ✅ Parameterized Queries / Prepared Statements
+### 🚫 Common “Fixes” (and Their Weaknesses)
 
-Replaced vulnerable patterns like:
+- Simple blacklists:
+  - Block `127.0.0.1`, `localhost`, `169.254.169.254`, etc.
+  - Rely on string matches in the URL.
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+- Basic whitelists:
+  - Allow only certain hostnames, but:
+    - Do not handle subdomains correctly.
+    - Do not defend against open redirects.
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+### 🧨 Bypass Techniques Reviewed
 
-SQL and data are sent separately.
+- Alternate IP Representations
+  - Hex, octal, and mixed formats for IP addresses.
+  - Alternative loopback forms like `127.1` or crafted domains resolving to loopback.
+  - Goal: reach the same internal host while avoiding literal blacklist patterns.
 
-The database treats parameters as literal values, not part of the SQL syntax.
+- URL Tricks & Redirects
+  - Exploit open redirects on allowed domains.
+  - Let the SSRF client follow redirects to the real internal target.
+  - Use URL parsing quirks, encoded characters, and user-info sections (`user@host`) to bypass naive parsers.
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
+- DNS Rebinding
+  - Use a domain that:
+    - Resolves to a benign IP during validation.
+    - Then resolves to an internal IP when the actual request is made.
+  - Breaks defenses that validate only on the initial DNS resolution step.
 
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
+- Advanced Payloads
+  - Using schemes like `gopher://`, `file://`, or `dict://` in contexts where the HTTP client supports them.
+  - Leveraging curated payload lists and cheat sheets for edge cases.
 
-Still important to:
+### 🛡️ Defensive Takeaways (High Level)
 
-Avoid manual string concatenation.
+- Use robust URL parsing and **strict allowlists** for outbound requests.
+- Block internal ranges and metadata endpoints at both app and network levels.
+- Avoid following redirects blindly, or re-validate after redirection.
+- Treat SSRF as a design concern, not just a regex problem.
 
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
-
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
-
-Use least-privilege database accounts; the app should not connect as a superuser.
-
-Suppress detailed SQL error messages from end users.
-
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
-
-Block known SQLi payloads with signatures.
-
-Use heuristic and behavioral analysis to detect suspicious patterns.
-
-But:
-
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+**Day 60 Summary:**
+Today’s focus was on how “patching SSRF” can be fragile when it’s based on simple string filters—and why layered, well-validated controls are needed instead.
