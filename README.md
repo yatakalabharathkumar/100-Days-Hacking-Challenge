@@ -1,54 +1,42 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 61/100 – JWT Attacks & Token Security
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Understanding how JWTs can be attacked and how to use them more safely.
 
-### ✅ Parameterized Queries / Prepared Statements
+### 🧨 Attack Surfaces
 
-Replaced vulnerable patterns like:
+- `alg: none` and Algorithm Confusion
+  - Some implementations historically allowed `alg: none`, meaning no signature verification.
+  - Others were vulnerable to HS256/RS256 confusion:
+    - Server expects RS256 but accepts HS256 and uses the RSA public key as an HMAC secret, allowing forged tokens.
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+- Weak Secrets
+  - Short or guessable HMAC secrets for HS256 tokens make brute-force/signing feasible.
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+- Header Parameter Abuse
+  - `kid` header used to look up keys:
+    - Path traversal or arbitrary file reads.
+    - Pointing to attacker-controlled resources.
+  - Other custom headers that influence key selection or verification logic.
 
-SQL and data are sent separately.
+### 🛡️ Safer JWT Usage
 
-The database treats parameters as literal values, not part of the SQL syntax.
+- Algorithms & Keys
+  - Explicitly whitelist allowed algorithms.
+  - Prefer RS256 with strong key management for larger systems.
+  - Rotate keys periodically and on suspicion of compromise.
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
+- Validation
+  - Always verify:
+    - Signature
+    - `iss` (issuer)
+    - `aud` (audience)
+    - `exp`, `nbf`, and other relevant claims
+  - Reject tokens using unexpected algorithms or missing critical claims.
 
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
+- Design Considerations
+  - Keep token lifetimes short.
+  - Avoid placing highly sensitive or rapidly-changing authorization data inside JWTs when revocation is hard.
+  - Treat tokens as secrets: protect in transit (HTTPS) and at rest (secure storage, HttpOnly cookies if used in browsers).
 
-Still important to:
-
-Avoid manual string concatenation.
-
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
-
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
-
-Use least-privilege database accounts; the app should not connect as a superuser.
-
-Suppress detailed SQL error messages from end users.
-
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
-
-Block known SQLi payloads with signatures.
-
-Use heuristic and behavioral analysis to detect suspicious patterns.
-
-But:
-
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+**Day 61 Summary:**
+JWTs are just envelopes; the real security is in how strictly you verify them and how carefully you manage the keys behind them.
