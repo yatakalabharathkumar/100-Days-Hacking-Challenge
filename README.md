@@ -1,54 +1,40 @@
-## 🗓️ Day 53/100 – Preventing SQL Injection
+## 🗓️ Day 62/100 – Wireshark Analysis of Auth Flows
 
-**Focus:** Moving from understanding SQL injection to hardening applications against it.
+**Focus:** Using Wireshark to visualize how different authentication and session mechanisms look on the wire.
 
-### ✅ Parameterized Queries / Prepared Statements
+### 🔍 Scenarios Analyzed
 
-Replaced vulnerable patterns like:
+1. HTTP Basic Auth (Insecure)
+   - Accessed a password-protected page over HTTP.
+   - Observed:
+     - Initial 401 response requesting authentication.
+     - Follow-up request containing an `Authorization: Basic <base64>` header with credentials.
+   - In Wireshark, following the TCP stream showed the username and password in cleartext once decoded from Base64.
 
-```sql
--- vulnerable
-query = "SELECT * FROM users WHERE username = '" + user + "' AND pass = '" + pass + "'";
-with parameterized forms:
+2. Cookie-Based Sessions
+   - Logged into a web app using a form-based login.
+   - Observed:
+     - `Set-Cookie` header in the server's response containing a session token.
+     - Subsequent requests including `Cookie: sessionToken=...` headers.
+   - This illustrated how session hijacking works if an attacker can capture this traffic on an unencrypted connection.
 
-sql
--- safe pattern
-query = "SELECT * FROM users WHERE username = ? AND pass = ?";
-setParam(1, user);
-setParam(2, pass);
-Key points:
+3. HTTPS-Protected Auth
+   - Repeated similar login flows over HTTPS.
+   - Observed:
+     - TLS handshake (ClientHello, ServerHello, etc.).
+     - HTTP data carried inside encrypted TLS records, making credentials and cookies unreadable without decryption keys.
 
-SQL and data are sent separately.
+### 🧠 Takeaways
 
-The database treats parameters as literal values, not part of the SQL syntax.
+- Plain HTTP:
+  - Credentials (Basic auth) and session cookies are fully visible to anyone on path.
+- HTTPS:
+  - Properly configured TLS prevents direct inspection of auth data.
+- Wireshark:
+  - Great for demonstrating:
+    - Why legacy/insecure auth methods are dangerous.
+    - How cookies and session tokens move between client and server.
+    - The real impact of enabling (or not enabling) encryption.
 
-This breaks classic payloads such as ' OR 1=1-- because they are no longer interpreted as code.
-
-🧰 ORMs and Query Builders
-ORMs (and query builders) help generate parameterized queries by default.
-
-Still important to:
-
-Avoid manual string concatenation.
-
-Use the ORM’s parameter APIs instead of raw interpolated SQL.
-
-🧱 Extra Layers
-Validate and/or whitelist input where it makes sense (e.g., IDs must be numeric, enum values restricted).
-
-Use least-privilege database accounts; the app should not connect as a superuser.
-
-Suppress detailed SQL error messages from end users.
-
-🔥 WAF vs. Secure Code
-Web Application Firewalls can:
-
-Block known SQLi payloads with signatures.
-
-Use heuristic and behavioral analysis to detect suspicious patterns.
-
-But:
-
-Misconfigurations or novel payloads can bypass WAF rules.
-
-WAFs should be additional protection, not the main fix.
+**Day 62 Summary:**
+Seeing authentication and session flows in Wireshark turns “use HTTPS and protect cookies” from best-practice advice into a very tangible security requirement.
