@@ -1,17 +1,18 @@
-## 100 Days Hacking Challenge – Day 1
+## 🗓️ Day 63/100 – Path Traversal Basics
 
-On Day 1 of my **100 Days Hacking Challenge**, my perspective on hacking changed completely.
+**Focus:** Understanding how insecure file‑path handling leads to directory traversal vulnerabilities.
 
-I realised that real hackers start with **white‑hat fundamentals**, not random attacks or tool-hopping.
+### 🧩 What Is Path Traversal?
 
-**What I learned on Day 1:**
-- The true meaning of **bug bounty hunting**
-- How **penetration testing** is different from unstructured/random attacks
-- How **computer networking** works behind the scenes
-- The basics of **client–server architecture**
-- How **data packets** travel across networks
-- The different roles and types of **servers**
+Path traversal happens when:
 
-This is the kind of foundation real cybercrime investigators and security professionals rely on *before* touching any tool.
+- An application accepts user input that specifies a file path (e.g., `file=profile.jpg`).  
+- The server concatenates this input into a server‑side path and then reads or writes that file without proper validation.  
+- Attackers inject segments like `../../../../` into the path to escape the intended directory.
 
-I will be logging my daily progress here as part of the 100 Days Hacking Challenge.
+Example vulnerable pattern:
+
+```http
+GET /view?file=report.pdfIf the server does:path = base_dir + user_input
+read_file(path)An attacker can send:GET /view?file=../../../../etc/passwdIf the server does not sanitize this, it may read the system passwd file.🧪 What I Learned PracticallyHow traversal sequences like ../ cause the app to climb out of its target directory.How URL encoding (..%2f, ..%5c) and alternative separators can bypass basic filters.That writing as well as reading paths can be dangerous (e.g., overwriting config files or logs).🛡️ Basic DefensesNever directly concatenate user‑controlled strings into file paths.Validate and encode/sanitize paths to remove or block ../ and ..\.Use allowlists of known‑safe file names or IDs instead of raw paths.Store files in isolated, non‑root directories, limiting what an attacker can reach even if the path check fails.Day 63 Summary:
+Today reinforced that even “simple” file‑handling bugs can expose the underlying filesystem when paths are trusted without strict controls.
